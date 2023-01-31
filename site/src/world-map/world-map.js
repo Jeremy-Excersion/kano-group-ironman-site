@@ -95,7 +95,7 @@ export class WorldMap extends BaseElement {
     };
     const startingLocation = this.startingLocation
       ? this.gamePositionToLatLong(this.startingLocation.x, this.startingLocation.y)
-      : this.gamePositionToLatLong(3103, 3095);
+      : this.gamePositionToLatLong(3090, 3550);
     const startingZoom = this.startingZoom || 5;
     const map = L.map(this.querySelector(".world-map__map"), {
       crs: CRSPixel,
