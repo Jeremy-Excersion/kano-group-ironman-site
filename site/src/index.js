@@ -35,6 +35,7 @@ import "./loading-screen/loading-screen.js";
 import "./login-page/login-page.js";
 import "./logout-page/logout-page.js";
 import "./demo-page/demo-page.js";
+import "./kano-page/kano-page.js";
 import "./social-links/social-links.js";
 import "./rune-pouch/rune-pouch.js";
 import "./stat-bar/stat-bar.js";
