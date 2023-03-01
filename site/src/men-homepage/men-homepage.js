@@ -29,7 +29,7 @@ export class MenHomepage extends BaseElement {
 
   get hasLogin() {
     const group = storage.getGroup();
-    return group && group.groupName && group.groupToken && (group.groupName !== "@EXAMPLE" || group.groupName !== "@KANO");
+    return group && group.groupName && group.groupToken && (group.groupName !== "@EXAMPLE");
   }
 }
 

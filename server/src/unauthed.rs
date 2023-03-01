@@ -148,16 +148,16 @@ pub async fn create_group(
 ) -> Result<HttpResponse, Error> {
     let mut create_group_inner = create_group.into_inner();
 
-    if config.hcaptcha.enabled {
-        let captcha_verify_response = verify_captcha(
-            &create_group_inner.captcha_response,
-            &config.hcaptcha.secret,
-        )
-        .await?;
-        if !captcha_verify_response.success {
-            return Ok(HttpResponse::BadRequest().body("Captcha response verification failed"));
-        }
-    }
+    // if config.hcaptcha.enabled {
+    //     let captcha_verify_response = verify_captcha(
+    //         &create_group_inner.captcha_response,
+    //         &config.hcaptcha.secret,
+    //     )
+    //     .await?;
+    //     if !captcha_verify_response.success {
+    //         return Ok(HttpResponse::BadRequest().body("Captcha response verification failed"));
+    //     }
+    // }
 
     create_group_inner.name = create_group_inner.name.trim().to_string();
     if !valid_name(&create_group_inner.name) {

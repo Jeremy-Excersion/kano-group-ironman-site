@@ -38,7 +38,7 @@ export class AppInitializer extends BaseElement {
     loadingScreenManager.showLoadingScreen();
     const group = storage.getGroup();
 
-    if (group.groupName === "@EXAMPLE" || group.groupName === "@KANO") {
+    if (group.groupName === "@EXAMPLE") {
       exampleData.enable();
       api.exampleDataEnabled = true;
       api.enable();

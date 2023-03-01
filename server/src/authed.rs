@@ -11,28 +11,6 @@ use chrono::{DateTime, Utc};
 use deadpool_postgres::{Client, Pool};
 use serde::Deserialize;
 
-#[post("/add-group-member")]
-pub async fn add_group_member(
-    auth: Authenticated,
-    group_member: web::Json<GroupMember>,
-    db_pool: web::Data<Pool>,
-) -> Result<HttpResponse, Error> {
-    if group_member.name.eq(SHARED_MEMBER) {
-        return Ok(
-            HttpResponse::BadRequest().body(format!("Member name {} not allowed", SHARED_MEMBER))
-        );
-    }
-
-    if !valid_name(&group_member.name) {
-        return Ok(HttpResponse::BadRequest()
-            .body(format!("Member name {} is not valid", group_member.name)));
-    }
-
-    let client: Client = db_pool.get().await.map_err(ApiError::PoolError)?;
-    db::add_group_member(&client, auth.group_id, &group_member.name).await?;
-    Ok(HttpResponse::Created().finish())
-}
-
 #[delete("/delete-group-member")]
 pub async fn delete_group_member(
     auth: Authenticated,
@@ -160,4 +138,26 @@ pub async fn am_i_in_group(
         return Ok(HttpResponse::Unauthorized().body("Player is not a member of this group"));
     }
     Ok(HttpResponse::Ok().finish())
+}
+
+#[post("/add-group-member")]
+pub async fn add_group_member(
+    auth: Authenticated,
+    group_member: web::Json<GroupMember>,
+    db_pool: web::Data<Pool>,
+) -> Result<HttpResponse, Error> {
+    if group_member.name.eq(SHARED_MEMBER) {
+        return Ok(
+            HttpResponse::BadRequest().body(format!("Member name {} not allowed", SHARED_MEMBER))
+        );
+    }
+
+    if !valid_name(&group_member.name) {
+        return Ok(HttpResponse::BadRequest()
+            .body(format!("Member name {} is not valid", group_member.name)));
+    }
+
+    let client: Client = db_pool.get().await.map_err(ApiError::PoolError)?;
+    db::add_group_member(&client, auth.group_id, &group_member.name).await?;
+    Ok(HttpResponse::Created().finish())
 }
