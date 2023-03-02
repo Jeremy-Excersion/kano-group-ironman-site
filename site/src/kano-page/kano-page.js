@@ -25,7 +25,7 @@ export class KanoPage extends BaseElement {
   async login() {
     try {
       const name = "kanoWorld1";
-      const token = "1a40a83c-41ff-4253-bf48-e0d20eea6ee2";
+      const token = "d8ee18a9-9e29-46c6-91bd-55ba9bf89c3d";
       api.setCredentials(name, token);
       const response = await api.amILoggedIn();
       if (response.ok) {
