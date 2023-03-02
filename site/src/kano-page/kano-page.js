@@ -25,12 +25,12 @@ export class KanoPage extends BaseElement {
   async login() {
     try {
       const name = "kanoWorld1";
-      const token = "e131519e-0d97-4179-8fc2-25210b56f297";
+      const token = "1a40a83c-41ff-4253-bf48-e0d20eea6ee2";
       api.setCredentials(name, token);
       const response = await api.amILoggedIn();
       if (response.ok) {
         storage.storeGroup(name, token);
-        window.history.pushState("", "", "/group");
+        window.history.pushState("", "", "/group/map");
       } else {
         if (response.status === 401) {
           console.log("Group name or token is incorrect");

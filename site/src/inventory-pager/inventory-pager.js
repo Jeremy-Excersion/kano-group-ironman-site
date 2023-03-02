@@ -18,6 +18,7 @@ export class InventoryPager extends BaseElement {
     this.sortTarget = document.querySelector(".items-page__sort");
     this.itemCount = document.querySelector(".items-page__item-count");
     this.totalGeValue = document.querySelector(".items-page__total-ge-price");
+    this.totalHaValue = document.querySelector(".items-page__total-ha-price");
     this.searchElement = document.querySelector(".items-page__search");
     this.showIndividualPricesInput = document.querySelector("#items-page__individual-items");
     this.showIndividualPrices = this.showIndividualPricesInput.checked;
@@ -77,6 +78,8 @@ export class InventoryPager extends BaseElement {
       this.compare = this.compareOnHighAlch.bind(this);
     } else if (selectedSort === "geprice") {
       this.compare = this.compareOnGePrice.bind(this);
+    } else if (selectedSort === "alphabetical") {
+      this.compare = this.compareAlphabetical.bind(this);
     }
 
     this.maybeRenderPage(this.currentPage);
@@ -113,6 +116,10 @@ export class InventoryPager extends BaseElement {
     return this.itemQuantity(b) * b.gePrice - this.itemQuantity(a) * a.gePrice;
   }
 
+  compareAlphabetical(a, b) {
+    return a.name.localeCompare(b.name);
+  }
+
   handleUpdatedItems() {
     const previousItemCount = this.numberOfItems;
     this.maybeRenderPage(this.currentPage);
@@ -139,7 +146,7 @@ export class InventoryPager extends BaseElement {
       this.renderPage(newPageItems);
     }
 
-    this.updateGeValue();
+    this.updateItemValues();
   }
 
   pageUpdated(previous, current) {
@@ -183,16 +190,19 @@ export class InventoryPager extends BaseElement {
     this.pageTarget.innerHTML = items;
   }
 
-  updateGeValue() {
+  updateItemValues() {
     let totalGeValue = 0;
+    let totalHaValue = 0;
     for (const item of Object.values(groupData.groupItems)) {
       if (item.visible) {
-        const gePrice = item.gePrice;
-        totalGeValue += this.itemQuantity(item) * gePrice;
+        const quantity = this.itemQuantity(item);
+        totalGeValue += item.gePrice * quantity;
+        totalHaValue += item.highAlch * quantity;
       }
     }
 
     this.totalGeValue.innerHTML = totalGeValue.toLocaleString();
+    this.totalHaValue.innerHTML = totalHaValue.toLocaleString();
   }
 
   itemQuantity(item) {

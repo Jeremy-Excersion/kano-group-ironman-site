@@ -5,7 +5,7 @@ import { exampleData } from "./example-data";
 
 class Api {
   constructor() {
-    this.baseUrl = "http://localhost:5000/api";
+    this.baseUrl = "/api";
     this.createGroupUrl = `${this.baseUrl}/create-group`;
     this.exampleDataEnabled = false;
     this.enabled = false;
@@ -125,10 +125,11 @@ class Api {
       body: JSON.stringify({ name: memberName }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: this.groupToken,
       },
       method: "POST",
     });
-    console.log("here")
+
     return response;
   }
 
@@ -186,8 +187,8 @@ class Api {
   }
 
   async getCaptchaEnabled() {
-    const response = true;
-    return response;
+    const response = await fetch(this.captchaEnabledUrl);
+    return response.json();
   }
 }
 
