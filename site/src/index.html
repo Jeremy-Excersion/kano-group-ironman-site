@@ -14,6 +14,7 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="theme-color" content="#ffffff" />
+    <link rel="preload" href="/fonts/RuneScape-Chat-07.ttf" as="font" type="font/ttf" crossorigin />
 
     <script>
       window.getTheme = () => {
@@ -26,29 +27,13 @@
         return theme;
       };
 
-      window.updateTheme = (preloadImages) => {
+      window.updateTheme = () => {
         const theme = window.getTheme();
         const darkMode = theme === "dark";
         if (darkMode) {
           document.documentElement.classList.add("dark-mode");
         } else {
           document.documentElement.classList.remove("dark-mode");
-        }
-
-        if (preloadImages) {
-          const preloadImages = [
-            "border-button",
-            "border",
-            "297-0",
-            "border-tiny"
-          ];
-          for (const preloadImage of preloadImages) {
-            const link = document.createElement('link');
-            link.setAttribute("rel", "preload");
-            link.setAttribute("as", "image");
-            link.setAttribute("href", `/ui/${preloadImage + (darkMode ? '-dark' : '')}.png`);
-            document.head.appendChild(link);
-          }
         }
       };
 
@@ -143,16 +128,14 @@
       <template>
         <app-initializer></app-initializer>
         <div class="authed-section__main-content">
-          <app-navigation class="rsborder-tiny rsbackground"></app-navigation>
           <div class="authed-section__outlet"></div>
         </div>
-        <side-panel></side-panel>
       </template>
     </wrap-routes>
 
     <rs-tooltip></rs-tooltip>
     <confirm-dialog class="dialog"></confirm-dialog>
-    <script async type="module" src="/app.js"></script>
+    <script>{{js}}</script>
     <app-route route-path="*" route-redirect="/"></app-route>
   </body>
 </html>

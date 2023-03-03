@@ -25,7 +25,7 @@ export class AppInitializer extends BaseElement {
     const map = document.querySelector("#background-worldmap");
     map.waitUntilInitialized().then(() => {
       map.showPlane(1);
-      map.map.setView(map.gamePositionToLatLong(3103, 3095), 5);
+      map.map.setView(map.gamePositionToLatLong(3100, 3480), 5);
     });
   }
 
@@ -36,9 +36,10 @@ export class AppInitializer extends BaseElement {
 
   async initializeApp() {
     loadingScreenManager.showLoadingScreen();
+    await Promise.all([Item.loadItems(), Quest.loadQuests(), AchievementDiary.loadDiaries()]);
     const group = storage.getGroup();
 
-    if (group.groupName === "@EXAMPLE" || group.groupName === "@KANO") {
+    if (group.groupName === "@EXAMPLE") {
       exampleData.enable();
       api.exampleDataEnabled = true;
       api.enable();

@@ -95,15 +95,18 @@ export class WorldMap extends BaseElement {
     };
     const startingLocation = this.startingLocation
       ? this.gamePositionToLatLong(this.startingLocation.x, this.startingLocation.y)
-      : this.gamePositionToLatLong(3090, 3550);
+      : this.gamePositionToLatLong(3100, 3480);
     const startingZoom = this.startingZoom || 5;
     const map = L.map(this.querySelector(".world-map__map"), {
       crs: CRSPixel,
       attributionControl: false,
       zoomControl: false,
       zoomSnap: 0,
+      scrollWheelZoom: false,
     }).setView(startingLocation, startingZoom, { animate: false });
 
+    L.control.zoom({ position: "bottomright" }).addTo(map);
+    
     this.map = map;
     this.tileLayers = [];
     for (let i = 0; i < 4; ++i) {
@@ -258,6 +261,7 @@ export class WorldMap extends BaseElement {
     if (!WorldMap.leafletScriptTag) {
       WorldMap.leafletScriptTag = document.createElement("script");
       WorldMap.leafletScriptTag.src = "https://unpkg.com/leaflet@1.9.2/dist/leaflet.js";
+      WorldMap.leafletScriptTag.setAttribute("defer", "");
       document.body.appendChild(WorldMap.leafletScriptTag);
     }
     while (typeof L !== "object") {
@@ -272,7 +276,7 @@ export class WorldMap extends BaseElement {
       L.GridLayer.include({
         _initTile: function (tile) {
           originalInitTile.call(this, tile);
-          const tilePadding = 2;
+          const tilePadding = 1;
           const tileSize = this.getTileSize();
           tile.style.width = tileSize.x + tilePadding + "px";
           tile.style.height = tileSize.y + tilePadding + "px";

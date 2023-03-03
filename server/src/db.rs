@@ -34,12 +34,10 @@ pub async fn create_group(client: &mut Client, create_group: &CreateGroup) -> Re
         .await
         .map_err(ApiError::GroupCreationError)?;
     for member_name in &create_group.member_names {
-        if !member_name.is_empty() {
-            transaction
-                .execute(&create_member_stmt, &[&group_id, &member_name])
-                .await
-                .map_err(ApiError::GroupCreationError)?;
-        }
+        transaction
+            .execute(&create_member_stmt, &[&group_id, &member_name])
+            .await
+            .map_err(ApiError::GroupCreationError)?;
     }
 
     transaction
@@ -53,20 +51,20 @@ pub async fn add_group_member(
     group_id: i64,
     member_name: &str,
 ) -> Result<(), ApiError> {
-    let member_count_stmt = client
-        .prepare_cached(
-            "SELECT COUNT(*) FROM groupironman.members WHERE group_id=$1 AND member_name!=$2",
-        )
-        .await?;
-    let member_count: i64 = client
-        .query_one(&member_count_stmt, &[&group_id, &SHARED_MEMBER])
-        .await?
-        .try_get(0)
-        .map_err(ApiError::AddMemberError)?;
+    // let member_count_stmt = client
+    //     .prepare_cached(
+    //         "SELECT COUNT(*) FROM groupironman.members WHERE group_id=$1 AND member_name!=$2",
+    //     )
+    //     .await?;
+    // let member_count: i64 = client
+    //     .query_one(&member_count_stmt, &[&group_id, &SHARED_MEMBER])
+    //     .await?
+    //     .try_get(0)
+    //     .map_err(ApiError::AddMemberError)?;
 
-    if member_count >= 5 {
-        return Err(ApiError::GroupFullError);
-    }
+    // if member_count >= 5 {
+    //     return Err(ApiError::GroupFullError);
+    // }
 
     let create_member_stmt = client
         .prepare_cached("INSERT INTO groupironman.members (group_id, member_name) VALUES($1, $2)")
