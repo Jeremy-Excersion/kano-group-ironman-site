@@ -22,8 +22,8 @@
   "scripts": {
     "bundle": "npm run clean && node build.js --prod",
     "clean": "node scripts/clean.js",
-    "start": "concurrently \"npm run watch\" \"npm run serve -- --backend http://127.0.0.1:8080\"",
-    "start:local-api": "concurrently \"npm run watch\" \"npm run serve -- --backend http://127.0.0.1:8080\"",
+    "start": "concurrently \"npm run watch\" \"npm run serve -- --backend http://127.0.0.1:5000\"",
+    "start:local-api": "concurrently \"npm run watch\" \"npm run serve -- --backend http://127.0.0.1:5000\"",
     "serve": "node scripts/server.js",
     "watch": "node build --watch",
     "lint": "eslint --ext .js src",
@@ -34,5 +34,8 @@
     "prepare": "cd .. && husky install site/.husky",
     "precommit": "npm run format:check && npm run lint"
   },
-  "author": "Christopher Brown"
+  "author": "Christopher Brown",
+  "dependencies": {
+    "leaflet-gesture-handling": "^1.2.2"
+  }
 }

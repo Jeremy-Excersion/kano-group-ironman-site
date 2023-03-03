@@ -102,8 +102,11 @@ export class WorldMap extends BaseElement {
       attributionControl: false,
       zoomControl: false,
       zoomSnap: 0,
+      scrollWheelZoom: false,
     }).setView(startingLocation, startingZoom, { animate: false });
 
+    L.control.zoom({ position: "bottomright" }).addTo(map);
+    
     this.map = map;
     this.tileLayers = [];
     for (let i = 0; i < 4; ++i) {
