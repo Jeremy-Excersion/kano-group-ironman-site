@@ -65,7 +65,7 @@ export class WorldMap extends BaseElement {
       id: "rsmap",
       maxNativeZoom: 5,
       minNativeZoom: 5,
-      minZoom: 5,
+      minZoom: 3,
       maxZoom: 8,
       zoomOffset: -5,
       tms: true,
@@ -95,13 +95,14 @@ export class WorldMap extends BaseElement {
     };
     const startingLocation = this.startingLocation
       ? this.gamePositionToLatLong(this.startingLocation.x, this.startingLocation.y)
-      : this.gamePositionToLatLong(3100, 3480);
+      : this.gamePositionToLatLong(3100, 3425);
     const startingZoom = this.startingZoom || 5;
     const map = L.map(this.querySelector(".world-map__map"), {
       crs: CRSPixel,
       attributionControl: false,
       zoomControl: false,
-      zoomSnap: 0,
+      zoomSnap: 0.25,
+      zoomDelta: 0.25,
       scrollWheelZoom: false,
     }).setView(startingLocation, startingZoom, { animate: false });
 

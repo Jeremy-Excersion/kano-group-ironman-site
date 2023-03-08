@@ -25,7 +25,7 @@ export class AppInitializer extends BaseElement {
     const map = document.querySelector("#background-worldmap");
     map.waitUntilInitialized().then(() => {
       map.showPlane(1);
-      map.map.setView(map.gamePositionToLatLong(3100, 3480), 5);
+      map.map.setView(map.gamePositionToLatLong(3100, 3425), 5);
     });
   }
 
