@@ -22,7 +22,7 @@
   "scripts": {
     "bundle": "npm run clean && node build.js --prod",
     "clean": "node scripts/clean.js",
-    "start": "concurrently \"npm run watch\" \"npm run serve -- --backend http://127.0.0.1:5000\"",
+    "start": "concurrently \"npm run watch\" \"npm run serve -- --backend https://map-backend.kano.gg\"",
     "start:local-api": "concurrently \"npm run watch\" \"npm run serve -- --backend http://127.0.0.1:5000\"",
     "serve": "node scripts/server.js",
     "watch": "node build --watch",
