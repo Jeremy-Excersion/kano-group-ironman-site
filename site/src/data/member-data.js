@@ -32,10 +32,11 @@ export class MemberData {
       const timeSinceLastUpdated = utility.timeSinceLastUpdate(memberData.last_updated);
       let wasInactive = this.inactive;
 
-      this.inactive = !isNaN(timeSinceLastUpdated) && timeSinceLastUpdated > 300 * 1000;
+      this.inactive = !isNaN(timeSinceLastUpdated) && timeSinceLastUpdated > 30* 60 * 1000;
 
       if (!wasInactive && this.inactive) {
         this.publishUpdate("inactive");
+        memberData.coordinates = [0, 0, 0];
       } else if (wasInactive && !this.inactive) {
         this.publishUpdate("active");
       }
